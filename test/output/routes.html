@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_8f65276bfcfd45a466420d2d92603774 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+        <div style="position: fixed; 
+                    bottom: 50px; left: 50px; width: 200px; height: 90px; 
+                    background-color: white; border:2px solid grey; z-index:9999; 
+                    font-size:14px; padding: 10px">
+        <p><b>Цвета маршрутов:</b></p>
+        <p><i class="fa fa-circle" style="color:blue"></i> Медленные (< 5 км/ч)</p>
+        <p><i class="fa fa-circle" style="color:green"></i> Средние (5-15 км/ч)</p>
+        <p><i class="fa fa-circle" style="color:red"></i> Быстрые (> 15 км/ч)</p>
+        </div>
+        
+    
+            <div class="folium-map" id="map_8f65276bfcfd45a466420d2d92603774" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_8f65276bfcfd45a466420d2d92603774 = L.map(
+                "map_8f65276bfcfd45a466420d2d92603774",
+                {
+                    center: [51.07951538102643, 71.3990300311042],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_5d3eace5a74f5dc105d1b00742b0d5dd = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_5d3eace5a74f5dc105d1b00742b0d5dd.addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var poly_line_ff73f15389dc5cfb55f26c5f2df0df02 = L.polyline(
+                [[51.0929, 71.40716], [51.09431, 71.42412], [51.08599, 71.42056], [51.08897, 71.42585], [51.09086, 71.40777], [51.09029, 71.42277], [51.08782, 71.40582], [51.08733, 71.41869], [51.08181, 71.41543], [51.08706, 71.41436], [51.08809, 71.41121], [51.08659, 71.41387], [51.07673, 71.41492], [51.08426, 71.41419], [51.09621, 71.42339], [51.08317, 71.41352], [51.07981, 71.40585]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_e25b9cac9c8ee1bc2055fcaf93c7bfb1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_818a2037d72f21e5b499bd94bfb96e63 = $(`<div id="html_818a2037d72f21e5b499bd94bfb96e63" style="width: 100.0%; height: 100.0%;">Трек -9184562931191827114<br>Средняя скорость: 7.5 км/ч</div>`)[0];
+                popup_e25b9cac9c8ee1bc2055fcaf93c7bfb1.setContent(html_818a2037d72f21e5b499bd94bfb96e63);
+            
+        
+
+        poly_line_ff73f15389dc5cfb55f26c5f2df0df02.bindPopup(popup_e25b9cac9c8ee1bc2055fcaf93c7bfb1)
+        ;
+
+        
+    
+    
+            var marker_10aaeb3d8fa60d680babd3164fab8cc4 = L.marker(
+                [51.0929, 71.40716],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_2aec935ad7580fe62cde66bd1a941d2e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d7cb26e1146e0ef0746e39e34023824f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_99a468f96aa3a3e24d927865a8641340 = $(`<div id="html_99a468f96aa3a3e24d927865a8641340" style="width: 100.0%; height: 100.0%;">Начало трека -9184562931191827114</div>`)[0];
+                popup_d7cb26e1146e0ef0746e39e34023824f.setContent(html_99a468f96aa3a3e24d927865a8641340);
+            
+        
+
+        marker_10aaeb3d8fa60d680babd3164fab8cc4.bindPopup(popup_d7cb26e1146e0ef0746e39e34023824f)
+        ;
+
+        
+    
+    
+                marker_10aaeb3d8fa60d680babd3164fab8cc4.setIcon(icon_2aec935ad7580fe62cde66bd1a941d2e);
+            
+    
+            var marker_c7cb4b730614713e10357f268105c63e = L.marker(
+                [51.07981, 71.40585],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_08ab61b705d2b8d364500f1b90438c31 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e6de6309ea45b615a439c292161291ab = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a5be6d12ce036b180e84f411fcea0731 = $(`<div id="html_a5be6d12ce036b180e84f411fcea0731" style="width: 100.0%; height: 100.0%;">Конец трека -9184562931191827114</div>`)[0];
+                popup_e6de6309ea45b615a439c292161291ab.setContent(html_a5be6d12ce036b180e84f411fcea0731);
+            
+        
+
+        marker_c7cb4b730614713e10357f268105c63e.bindPopup(popup_e6de6309ea45b615a439c292161291ab)
+        ;
+
+        
+    
+    
+                marker_c7cb4b730614713e10357f268105c63e.setIcon(icon_08ab61b705d2b8d364500f1b90438c31);
+            
+    
+            var poly_line_7f171bce30b5a1df576e9d0d8a53eb97 = L.polyline(
+                [[51.09047, 71.38213], [51.09225, 71.38202], [51.08984, 71.38499], [51.08643, 71.3806], [51.08931, 71.37877], [51.09299, 71.38148], [51.09564, 71.38368], [51.09111, 71.37274], [51.08667, 71.38287]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_8d72d2b2d208226e5708fc22b67fe1b3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_011da32119f64c1dd022d67023235e4f = $(`<div id="html_011da32119f64c1dd022d67023235e4f" style="width: 100.0%; height: 100.0%;">Трек -9129623117394659001<br>Средняя скорость: 11.0 км/ч</div>`)[0];
+                popup_8d72d2b2d208226e5708fc22b67fe1b3.setContent(html_011da32119f64c1dd022d67023235e4f);
+            
+        
+
+        poly_line_7f171bce30b5a1df576e9d0d8a53eb97.bindPopup(popup_8d72d2b2d208226e5708fc22b67fe1b3)
+        ;
+
+        
+    
+    
+            var marker_9c12809b0dfbec3e09f14e23704e7833 = L.marker(
+                [51.09047, 71.38213],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_7383d76c7e2e0c96669ed032005180e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3bb85e3bf847ae1b8600a1e9965ef9d2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_64e074f210587937e46ea1c38c4abd8c = $(`<div id="html_64e074f210587937e46ea1c38c4abd8c" style="width: 100.0%; height: 100.0%;">Начало трека -9129623117394659001</div>`)[0];
+                popup_3bb85e3bf847ae1b8600a1e9965ef9d2.setContent(html_64e074f210587937e46ea1c38c4abd8c);
+            
+        
+
+        marker_9c12809b0dfbec3e09f14e23704e7833.bindPopup(popup_3bb85e3bf847ae1b8600a1e9965ef9d2)
+        ;
+
+        
+    
+    
+                marker_9c12809b0dfbec3e09f14e23704e7833.setIcon(icon_7383d76c7e2e0c96669ed032005180e4);
+            
+    
+            var marker_3f30e273501e5b72fc6caa7fdec3b4e4 = L.marker(
+                [51.08667, 71.38287],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_cacfdca2cc559b450a8aee01bab3e59a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9aa23723b37e412d67078a848bf7f244 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_11b64788340777b7b925cec7467658d2 = $(`<div id="html_11b64788340777b7b925cec7467658d2" style="width: 100.0%; height: 100.0%;">Конец трека -9129623117394659001</div>`)[0];
+                popup_9aa23723b37e412d67078a848bf7f244.setContent(html_11b64788340777b7b925cec7467658d2);
+            
+        
+
+        marker_3f30e273501e5b72fc6caa7fdec3b4e4.bindPopup(popup_9aa23723b37e412d67078a848bf7f244)
+        ;
+
+        
+    
+    
+                marker_3f30e273501e5b72fc6caa7fdec3b4e4.setIcon(icon_cacfdca2cc559b450a8aee01bab3e59a);
+            
+    
+            var poly_line_6a7a3dac36ee190e9129e2956c6ca20a = L.polyline(
+                [[51.08842, 71.40413], [51.09426, 71.40541], [51.0867, 71.40836], [51.09446, 71.40349], [51.09113, 71.41178], [51.10086, 71.40774], [51.08617, 71.39579], [51.08363, 71.39922], [51.09543, 71.40163], [51.08901, 71.41233], [51.0888, 71.41208], [51.1072, 71.40471], [51.09838, 71.40496], [51.08706, 71.3929], [51.09472, 71.40419], [51.09501, 71.40766]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_fc07bf353fe4495815bec0e9914193a6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fb39b9f9d3bb459db334590aa4dbc2a7 = $(`<div id="html_fb39b9f9d3bb459db334590aa4dbc2a7" style="width: 100.0%; height: 100.0%;">Трек -9100108450274231430<br>Средняя скорость: 11.3 км/ч</div>`)[0];
+                popup_fc07bf353fe4495815bec0e9914193a6.setContent(html_fb39b9f9d3bb459db334590aa4dbc2a7);
+            
+        
+
+        poly_line_6a7a3dac36ee190e9129e2956c6ca20a.bindPopup(popup_fc07bf353fe4495815bec0e9914193a6)
+        ;
+
+        
+    
+    
+            var marker_4bd42a81f9349a73df06ff13486ecdd3 = L.marker(
+                [51.08842, 71.40413],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_b89aa73a422ad2d7e236ce3594568d18 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ffccc145852c0cb8320a916addfe64a2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a90105cc27049218a6cc027969222253 = $(`<div id="html_a90105cc27049218a6cc027969222253" style="width: 100.0%; height: 100.0%;">Начало трека -9100108450274231430</div>`)[0];
+                popup_ffccc145852c0cb8320a916addfe64a2.setContent(html_a90105cc27049218a6cc027969222253);
+            
+        
+
+        marker_4bd42a81f9349a73df06ff13486ecdd3.bindPopup(popup_ffccc145852c0cb8320a916addfe64a2)
+        ;
+
+        
+    
+    
+                marker_4bd42a81f9349a73df06ff13486ecdd3.setIcon(icon_b89aa73a422ad2d7e236ce3594568d18);
+            
+    
+            var marker_7ed00af4b8807ae637deb6e470ea87cf = L.marker(
+                [51.09501, 71.40766],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_4402c4a07c269f9c07369cf07de21fa2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9c48e400ca26e8c821773d1a5fb30937 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_48c590136948980bafb883e7e7a7b90c = $(`<div id="html_48c590136948980bafb883e7e7a7b90c" style="width: 100.0%; height: 100.0%;">Конец трека -9100108450274231430</div>`)[0];
+                popup_9c48e400ca26e8c821773d1a5fb30937.setContent(html_48c590136948980bafb883e7e7a7b90c);
+            
+        
+
+        marker_7ed00af4b8807ae637deb6e470ea87cf.bindPopup(popup_9c48e400ca26e8c821773d1a5fb30937)
+        ;
+
+        
+    
+    
+                marker_7ed00af4b8807ae637deb6e470ea87cf.setIcon(icon_4402c4a07c269f9c07369cf07de21fa2);
+            
+    
+            var poly_line_30a6cca249e5cd263171650dcb08abd1 = L.polyline(
+                [[51.0799, 71.40664], [51.07442, 71.40443], [51.0879, 71.41381], [51.08177, 71.40176], [51.08568, 71.40505], [51.08322, 71.40193], [51.08228, 71.39395]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_dad9f234582107094fe18bd98ea031c3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cbd8479eb6dd2e47a5fe1a29c5fbb18c = $(`<div id="html_cbd8479eb6dd2e47a5fe1a29c5fbb18c" style="width: 100.0%; height: 100.0%;">Трек -8457847614742296750<br>Средняя скорость: 11.7 км/ч</div>`)[0];
+                popup_dad9f234582107094fe18bd98ea031c3.setContent(html_cbd8479eb6dd2e47a5fe1a29c5fbb18c);
+            
+        
+
+        poly_line_30a6cca249e5cd263171650dcb08abd1.bindPopup(popup_dad9f234582107094fe18bd98ea031c3)
+        ;
+
+        
+    
+    
+            var marker_e739d00874a71bbd0e2cfe5a83618fff = L.marker(
+                [51.0799, 71.40664],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_5d258841636b3931e05795b5a7f9cf0d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1f31f9f0d1e49fe3880163a49d5638ba = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_80b9451c111e4d04ea16fc9bf05cb871 = $(`<div id="html_80b9451c111e4d04ea16fc9bf05cb871" style="width: 100.0%; height: 100.0%;">Начало трека -8457847614742296750</div>`)[0];
+                popup_1f31f9f0d1e49fe3880163a49d5638ba.setContent(html_80b9451c111e4d04ea16fc9bf05cb871);
+            
+        
+
+        marker_e739d00874a71bbd0e2cfe5a83618fff.bindPopup(popup_1f31f9f0d1e49fe3880163a49d5638ba)
+        ;
+
+        
+    
+    
+                marker_e739d00874a71bbd0e2cfe5a83618fff.setIcon(icon_5d258841636b3931e05795b5a7f9cf0d);
+            
+    
+            var marker_b68654a376691c9659fd736ceeaabd57 = L.marker(
+                [51.08228, 71.39395],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_33f8400d79c006d3831b50b63720fea1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bda93c9d270a8475a4345a4a4fc9076d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad7a327aedff0537015951f9c7f39c24 = $(`<div id="html_ad7a327aedff0537015951f9c7f39c24" style="width: 100.0%; height: 100.0%;">Конец трека -8457847614742296750</div>`)[0];
+                popup_bda93c9d270a8475a4345a4a4fc9076d.setContent(html_ad7a327aedff0537015951f9c7f39c24);
+            
+        
+
+        marker_b68654a376691c9659fd736ceeaabd57.bindPopup(popup_bda93c9d270a8475a4345a4a4fc9076d)
+        ;
+
+        
+    
+    
+                marker_b68654a376691c9659fd736ceeaabd57.setIcon(icon_33f8400d79c006d3831b50b63720fea1);
+            
+    
+            var poly_line_915cf314df603a1d6f9f8ab7629b0ec0 = L.polyline(
+                [[51.0766, 71.37837], [51.06487, 71.37109], [51.06739, 71.37937], [51.06222, 71.37699], [51.0665, 71.37393], [51.06304, 71.38182], [51.0629, 71.37902], [51.06612, 71.38752], [51.05498, 71.38229], [51.06326, 71.38611], [51.05235, 71.37728], [51.06608, 71.38048]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_c21345e2b2c69e9d349fc7e97ce23980 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8916f055a53a7945afa50b27b6bfff9a = $(`<div id="html_8916f055a53a7945afa50b27b6bfff9a" style="width: 100.0%; height: 100.0%;">Трек -8251526779648969795<br>Средняя скорость: 11.9 км/ч</div>`)[0];
+                popup_c21345e2b2c69e9d349fc7e97ce23980.setContent(html_8916f055a53a7945afa50b27b6bfff9a);
+            
+        
+
+        poly_line_915cf314df603a1d6f9f8ab7629b0ec0.bindPopup(popup_c21345e2b2c69e9d349fc7e97ce23980)
+        ;
+
+        
+    
+    
+            var marker_904be433f8ceeb41f4a2ab7d87d27677 = L.marker(
+                [51.0766, 71.37837],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_54153755b53fce3b7599692b92bc0011 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_96b1c1bcaeb8cff64f4dc4757487bba7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c84b257e60f9f68ae9041d97142ce5fb = $(`<div id="html_c84b257e60f9f68ae9041d97142ce5fb" style="width: 100.0%; height: 100.0%;">Начало трека -8251526779648969795</div>`)[0];
+                popup_96b1c1bcaeb8cff64f4dc4757487bba7.setContent(html_c84b257e60f9f68ae9041d97142ce5fb);
+            
+        
+
+        marker_904be433f8ceeb41f4a2ab7d87d27677.bindPopup(popup_96b1c1bcaeb8cff64f4dc4757487bba7)
+        ;
+
+        
+    
+    
+                marker_904be433f8ceeb41f4a2ab7d87d27677.setIcon(icon_54153755b53fce3b7599692b92bc0011);
+            
+    
+            var marker_059568b52c0520f89145275267bcdf6d = L.marker(
+                [51.06608, 71.38048],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_bec0dcbfe98cdfaf381d9e8e5546b7b5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8e89c5e87cc17310975259ce4261c833 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_95b97380b5dee6d29718e9fa236f47dd = $(`<div id="html_95b97380b5dee6d29718e9fa236f47dd" style="width: 100.0%; height: 100.0%;">Конец трека -8251526779648969795</div>`)[0];
+                popup_8e89c5e87cc17310975259ce4261c833.setContent(html_95b97380b5dee6d29718e9fa236f47dd);
+            
+        
+
+        marker_059568b52c0520f89145275267bcdf6d.bindPopup(popup_8e89c5e87cc17310975259ce4261c833)
+        ;
+
+        
+    
+    
+                marker_059568b52c0520f89145275267bcdf6d.setIcon(icon_bec0dcbfe98cdfaf381d9e8e5546b7b5);
+            
+    
+            var poly_line_deb96adb4266ef501a1428239ea6f776 = L.polyline(
+                [[51.09388, 71.40425], [51.08706, 71.3952], [51.09172, 71.39466], [51.0905, 71.40605], [51.09684, 71.3974], [51.08658, 71.39443], [51.0924, 71.4056], [51.08529, 71.40149], [51.08964, 71.40395], [51.08873, 71.40309], [51.08592, 71.39707], [51.09134, 71.40303]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_4d3f78d386c276b0abf9e7b297ce0f38 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9cfdb98f1a335050054acd86ef864fda = $(`<div id="html_9cfdb98f1a335050054acd86ef864fda" style="width: 100.0%; height: 100.0%;">Трек -8192731096832007036<br>Средняя скорость: 8.7 км/ч</div>`)[0];
+                popup_4d3f78d386c276b0abf9e7b297ce0f38.setContent(html_9cfdb98f1a335050054acd86ef864fda);
+            
+        
+
+        poly_line_deb96adb4266ef501a1428239ea6f776.bindPopup(popup_4d3f78d386c276b0abf9e7b297ce0f38)
+        ;
+
+        
+    
+    
+            var marker_5691d851950f2143d3600427f2f60f0d = L.marker(
+                [51.09388, 71.40425],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_75c49ad90158c1edd19453750632aa7d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_637be8c9f501919dc5f752e809f3a020 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c9d02f670c595cdc954916865dd3f992 = $(`<div id="html_c9d02f670c595cdc954916865dd3f992" style="width: 100.0%; height: 100.0%;">Начало трека -8192731096832007036</div>`)[0];
+                popup_637be8c9f501919dc5f752e809f3a020.setContent(html_c9d02f670c595cdc954916865dd3f992);
+            
+        
+
+        marker_5691d851950f2143d3600427f2f60f0d.bindPopup(popup_637be8c9f501919dc5f752e809f3a020)
+        ;
+
+        
+    
+    
+                marker_5691d851950f2143d3600427f2f60f0d.setIcon(icon_75c49ad90158c1edd19453750632aa7d);
+            
+    
+            var marker_a3b0b92e44aaba7b97b24d0bfd81a65b = L.marker(
+                [51.09134, 71.40303],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_1305934949dd12d629cac93674d85a6f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1455869a4522be9f5c993f0198ca33a4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4697ab68c90a0579059f49f96098a77b = $(`<div id="html_4697ab68c90a0579059f49f96098a77b" style="width: 100.0%; height: 100.0%;">Конец трека -8192731096832007036</div>`)[0];
+                popup_1455869a4522be9f5c993f0198ca33a4.setContent(html_4697ab68c90a0579059f49f96098a77b);
+            
+        
+
+        marker_a3b0b92e44aaba7b97b24d0bfd81a65b.bindPopup(popup_1455869a4522be9f5c993f0198ca33a4)
+        ;
+
+        
+    
+    
+                marker_a3b0b92e44aaba7b97b24d0bfd81a65b.setIcon(icon_1305934949dd12d629cac93674d85a6f);
+            
+    
+            var poly_line_28a73de702f125828bbd681dfdf51265 = L.polyline(
+                [[51.09399, 71.40042], [51.09461, 71.40098], [51.09409, 71.40572], [51.10028, 71.4084], [51.09869, 71.41711], [51.08747, 71.40858], [51.09933, 71.41373], [51.09004, 71.39967], [51.09348, 71.40992], [51.10524, 71.41039], [51.09703, 71.41463], [51.09339, 71.40717], [51.09097, 71.40369], [51.09894, 71.41208]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_a47ad9781a52fd33cd5053ba926c4090 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4b9070ce2cec2cbffaa5ebfba172e8c5 = $(`<div id="html_4b9070ce2cec2cbffaa5ebfba172e8c5" style="width: 100.0%; height: 100.0%;">Трек -8133282142835936436<br>Средняя скорость: 9.1 км/ч</div>`)[0];
+                popup_a47ad9781a52fd33cd5053ba926c4090.setContent(html_4b9070ce2cec2cbffaa5ebfba172e8c5);
+            
+        
+
+        poly_line_28a73de702f125828bbd681dfdf51265.bindPopup(popup_a47ad9781a52fd33cd5053ba926c4090)
+        ;
+
+        
+    
+    
+            var marker_abc2206ae095f30db3bbeadd857d4aac = L.marker(
+                [51.09399, 71.40042],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_7e321b6b088edc9e8aabdbe8eb943e3a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c7fc52503eb6558d443633f5117a8afa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5f1e287749727efdf0eb9ffa6315bf62 = $(`<div id="html_5f1e287749727efdf0eb9ffa6315bf62" style="width: 100.0%; height: 100.0%;">Начало трека -8133282142835936436</div>`)[0];
+                popup_c7fc52503eb6558d443633f5117a8afa.setContent(html_5f1e287749727efdf0eb9ffa6315bf62);
+            
+        
+
+        marker_abc2206ae095f30db3bbeadd857d4aac.bindPopup(popup_c7fc52503eb6558d443633f5117a8afa)
+        ;
+
+        
+    
+    
+                marker_abc2206ae095f30db3bbeadd857d4aac.setIcon(icon_7e321b6b088edc9e8aabdbe8eb943e3a);
+            
+    
+            var marker_06501d48c239e96d45bb712f42cb2276 = L.marker(
+                [51.09894, 71.41208],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_593a6bc16f47b3363b655e931d8912b2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7b6c6b5a653267fea3bd8488aac10736 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_41b45aa0007dffc8eaaa2715d027f6a2 = $(`<div id="html_41b45aa0007dffc8eaaa2715d027f6a2" style="width: 100.0%; height: 100.0%;">Конец трека -8133282142835936436</div>`)[0];
+                popup_7b6c6b5a653267fea3bd8488aac10736.setContent(html_41b45aa0007dffc8eaaa2715d027f6a2);
+            
+        
+
+        marker_06501d48c239e96d45bb712f42cb2276.bindPopup(popup_7b6c6b5a653267fea3bd8488aac10736)
+        ;
+
+        
+    
+    
+                marker_06501d48c239e96d45bb712f42cb2276.setIcon(icon_593a6bc16f47b3363b655e931d8912b2);
+            
+    
+            var poly_line_3c866317a3685e2733b12ed09bddf715 = L.polyline(
+                [[51.07168, 71.406], [51.0803, 71.40439], [51.0787, 71.41012], [51.07266, 71.40477], [51.07549, 71.41661], [51.07529, 71.40014], [51.07696, 71.40824], [51.07788, 71.41371], [51.07251, 71.40707], [51.07327, 71.40853], [51.06984, 71.41129], [51.08273, 71.39795], [51.07837, 71.40784], [51.07697, 71.4153]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_3a7d747f440faeacd49af4ca5e6b2c78 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_95b084a9fc425aa03142669fcefc2d75 = $(`<div id="html_95b084a9fc425aa03142669fcefc2d75" style="width: 100.0%; height: 100.0%;">Трек -8092015547912078795<br>Средняя скорость: 9.6 км/ч</div>`)[0];
+                popup_3a7d747f440faeacd49af4ca5e6b2c78.setContent(html_95b084a9fc425aa03142669fcefc2d75);
+            
+        
+
+        poly_line_3c866317a3685e2733b12ed09bddf715.bindPopup(popup_3a7d747f440faeacd49af4ca5e6b2c78)
+        ;
+
+        
+    
+    
+            var marker_3c2101f6f9092894b59eb68f2deb20be = L.marker(
+                [51.07168, 71.406],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_bc554d7c4d440bffcee1dccd106e4541 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b07ecea290a77e5a32b31209cc075769 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fc582c710eb688ad70e2b21c7abb203a = $(`<div id="html_fc582c710eb688ad70e2b21c7abb203a" style="width: 100.0%; height: 100.0%;">Начало трека -8092015547912078795</div>`)[0];
+                popup_b07ecea290a77e5a32b31209cc075769.setContent(html_fc582c710eb688ad70e2b21c7abb203a);
+            
+        
+
+        marker_3c2101f6f9092894b59eb68f2deb20be.bindPopup(popup_b07ecea290a77e5a32b31209cc075769)
+        ;
+
+        
+    
+    
+                marker_3c2101f6f9092894b59eb68f2deb20be.setIcon(icon_bc554d7c4d440bffcee1dccd106e4541);
+            
+    
+            var marker_2cb6713da8a5c0bb1aa151bd14b58c65 = L.marker(
+                [51.07697, 71.4153],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_00ae09d89646417ea6860af29ec0ad84 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e766606666559f809d6b5cdb071fecbc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bfaf175260a3a8aaf9211117718a1ba6 = $(`<div id="html_bfaf175260a3a8aaf9211117718a1ba6" style="width: 100.0%; height: 100.0%;">Конец трека -8092015547912078795</div>`)[0];
+                popup_e766606666559f809d6b5cdb071fecbc.setContent(html_bfaf175260a3a8aaf9211117718a1ba6);
+            
+        
+
+        marker_2cb6713da8a5c0bb1aa151bd14b58c65.bindPopup(popup_e766606666559f809d6b5cdb071fecbc)
+        ;
+
+        
+    
+    
+                marker_2cb6713da8a5c0bb1aa151bd14b58c65.setIcon(icon_00ae09d89646417ea6860af29ec0ad84);
+            
+    
+            var poly_line_8b63aab7f2f137f02269a8882bd6a7a3 = L.polyline(
+                [[51.06087, 71.39783], [51.06371, 71.39631], [51.06556, 71.39701], [51.0649, 71.391], [51.05799, 71.39541], [51.06421, 71.39029], [51.05816, 71.39889], [51.06648, 71.39148], [51.05271, 71.39937], [51.0619, 71.38979], [51.0676, 71.38696], [51.06215, 71.40879], [51.06173, 71.39738], [51.05938, 71.3924], [51.06207, 71.39373]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_09b73594ad94afa7e249ab7f9575d37e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6292018524b136da7e72ad47cfdfef2c = $(`<div id="html_6292018524b136da7e72ad47cfdfef2c" style="width: 100.0%; height: 100.0%;">Трек -7529978053749451708<br>Средняя скорость: 11.5 км/ч</div>`)[0];
+                popup_09b73594ad94afa7e249ab7f9575d37e.setContent(html_6292018524b136da7e72ad47cfdfef2c);
+            
+        
+
+        poly_line_8b63aab7f2f137f02269a8882bd6a7a3.bindPopup(popup_09b73594ad94afa7e249ab7f9575d37e)
+        ;
+
+        
+    
+    
+            var marker_0c7ed97a1573cdb9abba8f38663df6d7 = L.marker(
+                [51.06087, 71.39783],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_bd6460bed09e65ad0c953a1b1e9d73a0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b7d7030dce009079ed1085ce28929193 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_db559667cb27cc980125fa9fc26240bf = $(`<div id="html_db559667cb27cc980125fa9fc26240bf" style="width: 100.0%; height: 100.0%;">Начало трека -7529978053749451708</div>`)[0];
+                popup_b7d7030dce009079ed1085ce28929193.setContent(html_db559667cb27cc980125fa9fc26240bf);
+            
+        
+
+        marker_0c7ed97a1573cdb9abba8f38663df6d7.bindPopup(popup_b7d7030dce009079ed1085ce28929193)
+        ;
+
+        
+    
+    
+                marker_0c7ed97a1573cdb9abba8f38663df6d7.setIcon(icon_bd6460bed09e65ad0c953a1b1e9d73a0);
+            
+    
+            var marker_a854569e980e8fb84f7ba70ac462b61d = L.marker(
+                [51.06207, 71.39373],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_ac928cd1f77feacfe9c8ac7a3d8f4c8a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bc503353481ff91f263a2c8a8494fd82 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0e2199f6baf157a990cf2ec7d580ac02 = $(`<div id="html_0e2199f6baf157a990cf2ec7d580ac02" style="width: 100.0%; height: 100.0%;">Конец трека -7529978053749451708</div>`)[0];
+                popup_bc503353481ff91f263a2c8a8494fd82.setContent(html_0e2199f6baf157a990cf2ec7d580ac02);
+            
+        
+
+        marker_a854569e980e8fb84f7ba70ac462b61d.bindPopup(popup_bc503353481ff91f263a2c8a8494fd82)
+        ;
+
+        
+    
+    
+                marker_a854569e980e8fb84f7ba70ac462b61d.setIcon(icon_ac928cd1f77feacfe9c8ac7a3d8f4c8a);
+            
+    
+            var poly_line_20bac7bad67aca4def65ab77fe73d4e1 = L.polyline(
+                [[51.06949, 71.40482], [51.06054, 71.41566], [51.07824, 71.4089], [51.07365, 71.40867], [51.06979, 71.41594], [51.06967, 71.41605], [51.07611, 71.40653], [51.07155, 71.40407], [51.07572, 71.41403], [51.07474, 71.41548], [51.0712, 71.41853], [51.06855, 71.42033], [51.07187, 71.41356], [51.06963, 71.41299], [51.07315, 71.40734], [51.08163, 71.40777]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_a153474dba803a8b79b6c815fda1e382 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7dc41d5fad8f6206ddbb0914e41d76d5 = $(`<div id="html_7dc41d5fad8f6206ddbb0914e41d76d5" style="width: 100.0%; height: 100.0%;">Трек -7488712092833161321<br>Средняя скорость: 9.4 км/ч</div>`)[0];
+                popup_a153474dba803a8b79b6c815fda1e382.setContent(html_7dc41d5fad8f6206ddbb0914e41d76d5);
+            
+        
+
+        poly_line_20bac7bad67aca4def65ab77fe73d4e1.bindPopup(popup_a153474dba803a8b79b6c815fda1e382)
+        ;
+
+        
+    
+    
+            var marker_5a54469019c3c4e2e412b6ea84b9f658 = L.marker(
+                [51.06949, 71.40482],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_cc71985a74150f505e2fbaf915b8449c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_83a48e0bc0126eddb32f8d6be470d1f8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_598be5ceca774996f9cfde14442e0698 = $(`<div id="html_598be5ceca774996f9cfde14442e0698" style="width: 100.0%; height: 100.0%;">Начало трека -7488712092833161321</div>`)[0];
+                popup_83a48e0bc0126eddb32f8d6be470d1f8.setContent(html_598be5ceca774996f9cfde14442e0698);
+            
+        
+
+        marker_5a54469019c3c4e2e412b6ea84b9f658.bindPopup(popup_83a48e0bc0126eddb32f8d6be470d1f8)
+        ;
+
+        
+    
+    
+                marker_5a54469019c3c4e2e412b6ea84b9f658.setIcon(icon_cc71985a74150f505e2fbaf915b8449c);
+            
+    
+            var marker_3f044dde247e1a640c4d68cdfdd9acf3 = L.marker(
+                [51.08163, 71.40777],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_4db85df043bc498aca8b8e828ca8b5c9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aa8bc10544428999cc71d8032225a7ef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b1c34358756cc025b87a152f3da5e708 = $(`<div id="html_b1c34358756cc025b87a152f3da5e708" style="width: 100.0%; height: 100.0%;">Конец трека -7488712092833161321</div>`)[0];
+                popup_aa8bc10544428999cc71d8032225a7ef.setContent(html_b1c34358756cc025b87a152f3da5e708);
+            
+        
+
+        marker_3f044dde247e1a640c4d68cdfdd9acf3.bindPopup(popup_aa8bc10544428999cc71d8032225a7ef)
+        ;
+
+        
+    
+    
+                marker_3f044dde247e1a640c4d68cdfdd9acf3.setIcon(icon_4db85df043bc498aca8b8e828ca8b5c9);
+            
+    
+            var poly_line_d965cf8cc6a61b016d13e1c273504a97 = L.polyline(
+                [[51.06756, 71.39472], [51.07167, 71.37847], [51.06584, 71.39025], [51.08189, 71.37832], [51.06734, 71.38771], [51.07022, 71.39389], [51.07499, 71.3963], [51.07816, 71.3907], [51.06911, 71.3822], [51.07334, 71.38461], [51.07077, 71.39946], [51.07445, 71.38713], [51.07469, 71.38448], [51.07451, 71.37744], [51.07561, 71.38961], [51.06775, 71.38387], [51.08518, 71.38131]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_16c7c21fccc9e1ff5a7b40ebc4b39541 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4a80ad4866e508e6b48c662df9f97b43 = $(`<div id="html_4a80ad4866e508e6b48c662df9f97b43" style="width: 100.0%; height: 100.0%;">Трек -7254070194002132325<br>Средняя скорость: 10.2 км/ч</div>`)[0];
+                popup_16c7c21fccc9e1ff5a7b40ebc4b39541.setContent(html_4a80ad4866e508e6b48c662df9f97b43);
+            
+        
+
+        poly_line_d965cf8cc6a61b016d13e1c273504a97.bindPopup(popup_16c7c21fccc9e1ff5a7b40ebc4b39541)
+        ;
+
+        
+    
+    
+            var marker_4b6604eea293d0f91582475f66c024ff = L.marker(
+                [51.06756, 71.39472],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_702022ac4223ed9543fc898df5b7d286 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_31bcccf2f8b6a3475941062be05d0602 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f3fbb8043c39c8aae6b470d5b440b338 = $(`<div id="html_f3fbb8043c39c8aae6b470d5b440b338" style="width: 100.0%; height: 100.0%;">Начало трека -7254070194002132325</div>`)[0];
+                popup_31bcccf2f8b6a3475941062be05d0602.setContent(html_f3fbb8043c39c8aae6b470d5b440b338);
+            
+        
+
+        marker_4b6604eea293d0f91582475f66c024ff.bindPopup(popup_31bcccf2f8b6a3475941062be05d0602)
+        ;
+
+        
+    
+    
+                marker_4b6604eea293d0f91582475f66c024ff.setIcon(icon_702022ac4223ed9543fc898df5b7d286);
+            
+    
+            var marker_47bfb240dc6e9ce9a62b7a9d10593f8a = L.marker(
+                [51.08518, 71.38131],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_1e7ad7bf1d13e98f506b59794bf65e85 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2fffe600a226070927fb140d547ba166 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e3a093faf6af85c7de121b9a02a74dae = $(`<div id="html_e3a093faf6af85c7de121b9a02a74dae" style="width: 100.0%; height: 100.0%;">Конец трека -7254070194002132325</div>`)[0];
+                popup_2fffe600a226070927fb140d547ba166.setContent(html_e3a093faf6af85c7de121b9a02a74dae);
+            
+        
+
+        marker_47bfb240dc6e9ce9a62b7a9d10593f8a.bindPopup(popup_2fffe600a226070927fb140d547ba166)
+        ;
+
+        
+    
+    
+                marker_47bfb240dc6e9ce9a62b7a9d10593f8a.setIcon(icon_1e7ad7bf1d13e98f506b59794bf65e85);
+            
+    
+            var poly_line_1a9239249c11e22f5bb9e7313c2e5341 = L.polyline(
+                [[51.09116, 71.40738], [51.09332, 71.40111], [51.10012, 71.41672], [51.09914, 71.40806], [51.0975, 71.40359]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_94422dba5e0e065e4982dc3a9980cca6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b40976d1e91561244de0d2ffaf732e57 = $(`<div id="html_b40976d1e91561244de0d2ffaf732e57" style="width: 100.0%; height: 100.0%;">Трек -7010616967084931892<br>Средняя скорость: 12.4 км/ч</div>`)[0];
+                popup_94422dba5e0e065e4982dc3a9980cca6.setContent(html_b40976d1e91561244de0d2ffaf732e57);
+            
+        
+
+        poly_line_1a9239249c11e22f5bb9e7313c2e5341.bindPopup(popup_94422dba5e0e065e4982dc3a9980cca6)
+        ;
+
+        
+    
+    
+            var marker_a5e2821468111fbeafe520e96fe10b65 = L.marker(
+                [51.09116, 71.40738],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_22912388ce86894d0076a8c6ab49ddea = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_609981981a2be431c67ff1a447a10746 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_55aa4dde7ee6915d299f7e45b93ab79e = $(`<div id="html_55aa4dde7ee6915d299f7e45b93ab79e" style="width: 100.0%; height: 100.0%;">Начало трека -7010616967084931892</div>`)[0];
+                popup_609981981a2be431c67ff1a447a10746.setContent(html_55aa4dde7ee6915d299f7e45b93ab79e);
+            
+        
+
+        marker_a5e2821468111fbeafe520e96fe10b65.bindPopup(popup_609981981a2be431c67ff1a447a10746)
+        ;
+
+        
+    
+    
+                marker_a5e2821468111fbeafe520e96fe10b65.setIcon(icon_22912388ce86894d0076a8c6ab49ddea);
+            
+    
+            var marker_2daf10b4d05657e60068701dde9f35a9 = L.marker(
+                [51.0975, 71.40359],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_ffd11cdcec9247e925afe0520a0694f1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e573afee2102939dec19a609e9376e83 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cb1320494d4a55fc4960b75cde23c388 = $(`<div id="html_cb1320494d4a55fc4960b75cde23c388" style="width: 100.0%; height: 100.0%;">Конец трека -7010616967084931892</div>`)[0];
+                popup_e573afee2102939dec19a609e9376e83.setContent(html_cb1320494d4a55fc4960b75cde23c388);
+            
+        
+
+        marker_2daf10b4d05657e60068701dde9f35a9.bindPopup(popup_e573afee2102939dec19a609e9376e83)
+        ;
+
+        
+    
+    
+                marker_2daf10b4d05657e60068701dde9f35a9.setIcon(icon_ffd11cdcec9247e925afe0520a0694f1);
+            
+    
+            var poly_line_17258e8476215af13f4962d523265abb = L.polyline(
+                [[51.091, 71.38346], [51.09445, 71.39098], [51.10641, 71.38575], [51.09865, 71.39256], [51.0878, 71.39856], [51.09502, 71.39298], [51.08818, 71.38879], [51.09399, 71.39435], [51.10183, 71.40251], [51.09498, 71.40309], [51.09349, 71.39803], [51.09297, 71.38511], [51.09708, 71.3956], [51.08245, 71.38599], [51.09405, 71.39485], [51.08839, 71.39092]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_ce7107ab2cd77d4095cea7b3bed18276 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_efd2f1ebb19c3d47bfaff036cccb8549 = $(`<div id="html_efd2f1ebb19c3d47bfaff036cccb8549" style="width: 100.0%; height: 100.0%;">Трек -6824413956704314908<br>Средняя скорость: 10.2 км/ч</div>`)[0];
+                popup_ce7107ab2cd77d4095cea7b3bed18276.setContent(html_efd2f1ebb19c3d47bfaff036cccb8549);
+            
+        
+
+        poly_line_17258e8476215af13f4962d523265abb.bindPopup(popup_ce7107ab2cd77d4095cea7b3bed18276)
+        ;
+
+        
+    
+    
+            var marker_ee7d817f9006d115b0b2d412a365cb68 = L.marker(
+                [51.091, 71.38346],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_9572b47fb684ead76d7d0e5340b08aae = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_06b2b1c1cd9c8ee94dd43bab515d72ba = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6baa38837c490334b9944be38f7ac335 = $(`<div id="html_6baa38837c490334b9944be38f7ac335" style="width: 100.0%; height: 100.0%;">Начало трека -6824413956704314908</div>`)[0];
+                popup_06b2b1c1cd9c8ee94dd43bab515d72ba.setContent(html_6baa38837c490334b9944be38f7ac335);
+            
+        
+
+        marker_ee7d817f9006d115b0b2d412a365cb68.bindPopup(popup_06b2b1c1cd9c8ee94dd43bab515d72ba)
+        ;
+
+        
+    
+    
+                marker_ee7d817f9006d115b0b2d412a365cb68.setIcon(icon_9572b47fb684ead76d7d0e5340b08aae);
+            
+    
+            var marker_1ec4e659a6ad845bf9dfdead85c8d047 = L.marker(
+                [51.08839, 71.39092],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_f5261f5f9901a17c4d9185a0002c330d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b08cbbe9565333681fae13a6e6603b5f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_feda36100e7477f2a137be36579e89bc = $(`<div id="html_feda36100e7477f2a137be36579e89bc" style="width: 100.0%; height: 100.0%;">Конец трека -6824413956704314908</div>`)[0];
+                popup_b08cbbe9565333681fae13a6e6603b5f.setContent(html_feda36100e7477f2a137be36579e89bc);
+            
+        
+
+        marker_1ec4e659a6ad845bf9dfdead85c8d047.bindPopup(popup_b08cbbe9565333681fae13a6e6603b5f)
+        ;
+
+        
+    
+    
+                marker_1ec4e659a6ad845bf9dfdead85c8d047.setIcon(icon_f5261f5f9901a17c4d9185a0002c330d);
+            
+    
+            var poly_line_a7634cd2d3296755c7dcd9207fc1722d = L.polyline(
+                [[51.06741, 71.39814], [51.06086, 71.39665], [51.06234, 71.38778], [51.05768, 71.38466], [51.06009, 71.39356], [51.06928, 71.38898], [51.06486, 71.39402]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_1b1536a8b26d9f4523f96e3d1d4dd986 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_946ec353a60136e00ed51d38fa95912a = $(`<div id="html_946ec353a60136e00ed51d38fa95912a" style="width: 100.0%; height: 100.0%;">Трек -6657131244280484931<br>Средняя скорость: 10.8 км/ч</div>`)[0];
+                popup_1b1536a8b26d9f4523f96e3d1d4dd986.setContent(html_946ec353a60136e00ed51d38fa95912a);
+            
+        
+
+        poly_line_a7634cd2d3296755c7dcd9207fc1722d.bindPopup(popup_1b1536a8b26d9f4523f96e3d1d4dd986)
+        ;
+
+        
+    
+    
+            var marker_0af5d9bed0930431a581782ceaa42e81 = L.marker(
+                [51.06741, 71.39814],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_2437d097145b705172e201773793de3e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eae9d4f78294c7f048d4c29e8e56ffc0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8a622560038fe8ed036b94b371fc1572 = $(`<div id="html_8a622560038fe8ed036b94b371fc1572" style="width: 100.0%; height: 100.0%;">Начало трека -6657131244280484931</div>`)[0];
+                popup_eae9d4f78294c7f048d4c29e8e56ffc0.setContent(html_8a622560038fe8ed036b94b371fc1572);
+            
+        
+
+        marker_0af5d9bed0930431a581782ceaa42e81.bindPopup(popup_eae9d4f78294c7f048d4c29e8e56ffc0)
+        ;
+
+        
+    
+    
+                marker_0af5d9bed0930431a581782ceaa42e81.setIcon(icon_2437d097145b705172e201773793de3e);
+            
+    
+            var marker_3b35934044bacd6c1ecf65a5121b76dd = L.marker(
+                [51.06486, 71.39402],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_03631805fb47019ca2be03a808bce930 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_deb97868a9e6c664761a4848f96a0e78 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6076fb91b456841bfa85ba5f11c6bda4 = $(`<div id="html_6076fb91b456841bfa85ba5f11c6bda4" style="width: 100.0%; height: 100.0%;">Конец трека -6657131244280484931</div>`)[0];
+                popup_deb97868a9e6c664761a4848f96a0e78.setContent(html_6076fb91b456841bfa85ba5f11c6bda4);
+            
+        
+
+        marker_3b35934044bacd6c1ecf65a5121b76dd.bindPopup(popup_deb97868a9e6c664761a4848f96a0e78)
+        ;
+
+        
+    
+    
+                marker_3b35934044bacd6c1ecf65a5121b76dd.setIcon(icon_03631805fb47019ca2be03a808bce930);
+            
+    
+            var poly_line_68f53b399dc6fb2b26840b08f98a1ff8 = L.polyline(
+                [[51.06474, 71.39449], [51.08058, 71.40055], [51.08035, 71.39343], [51.0749, 71.39478], [51.07669, 71.38896], [51.07818, 71.40379], [51.08085, 71.38548], [51.0729, 71.39908], [51.08009, 71.39749], [51.07125, 71.39858], [51.0725, 71.39884], [51.07768, 71.39205], [51.07685, 71.39572], [51.07355, 71.39375], [51.07334, 71.3882], [51.07266, 71.3943]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_0e832818ae4f9a403dc00242e954d094 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8dfc5b6d6ae698fd835c619c2f1c1083 = $(`<div id="html_8dfc5b6d6ae698fd835c619c2f1c1083" style="width: 100.0%; height: 100.0%;">Трек -6078609117999791921<br>Средняя скорость: 11.7 км/ч</div>`)[0];
+                popup_0e832818ae4f9a403dc00242e954d094.setContent(html_8dfc5b6d6ae698fd835c619c2f1c1083);
+            
+        
+
+        poly_line_68f53b399dc6fb2b26840b08f98a1ff8.bindPopup(popup_0e832818ae4f9a403dc00242e954d094)
+        ;
+
+        
+    
+    
+            var marker_969e0125b6f3566a43f3f6ff605a656a = L.marker(
+                [51.06474, 71.39449],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_42b56fb6c7cdb277d1ebb7b410058fd9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_86c84e84951640f7cdea9628e0d076b6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4f696c449d46c78f20e74d31cd12acd1 = $(`<div id="html_4f696c449d46c78f20e74d31cd12acd1" style="width: 100.0%; height: 100.0%;">Начало трека -6078609117999791921</div>`)[0];
+                popup_86c84e84951640f7cdea9628e0d076b6.setContent(html_4f696c449d46c78f20e74d31cd12acd1);
+            
+        
+
+        marker_969e0125b6f3566a43f3f6ff605a656a.bindPopup(popup_86c84e84951640f7cdea9628e0d076b6)
+        ;
+
+        
+    
+    
+                marker_969e0125b6f3566a43f3f6ff605a656a.setIcon(icon_42b56fb6c7cdb277d1ebb7b410058fd9);
+            
+    
+            var marker_5c2fee9e14fb0d098ef9c73e047ac8d0 = L.marker(
+                [51.07266, 71.3943],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_69d4306b329ca9456f04b2f59d33914a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b645b48f3d3cc2c558272c3ad2215b4a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5636bb30b17c3937e727db5d17d9111c = $(`<div id="html_5636bb30b17c3937e727db5d17d9111c" style="width: 100.0%; height: 100.0%;">Конец трека -6078609117999791921</div>`)[0];
+                popup_b645b48f3d3cc2c558272c3ad2215b4a.setContent(html_5636bb30b17c3937e727db5d17d9111c);
+            
+        
+
+        marker_5c2fee9e14fb0d098ef9c73e047ac8d0.bindPopup(popup_b645b48f3d3cc2c558272c3ad2215b4a)
+        ;
+
+        
+    
+    
+                marker_5c2fee9e14fb0d098ef9c73e047ac8d0.setIcon(icon_69d4306b329ca9456f04b2f59d33914a);
+            
+    
+            var poly_line_4651cec2308ecd36f952b7980e8d9183 = L.polyline(
+                [[51.05904, 71.38062], [51.05859, 71.38813], [51.07367, 71.38507], [51.05607, 71.38861], [51.06382, 71.38426], [51.05677, 71.39074], [51.06502, 71.39119], [51.05456, 71.38661], [51.06267, 71.38], [51.0697, 71.39498], [51.05822, 71.38016], [51.06175, 71.38833], [51.06165, 71.38739], [51.05959, 71.38157], [51.06562, 71.38305], [51.05887, 71.39029]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_2f4d2f82c25ea4c5f89511eaef8d6dba = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9340414d4601e54b4b95a78fba671ca8 = $(`<div id="html_9340414d4601e54b4b95a78fba671ca8" style="width: 100.0%; height: 100.0%;">Трек -5932978599029970540<br>Средняя скорость: 9.2 км/ч</div>`)[0];
+                popup_2f4d2f82c25ea4c5f89511eaef8d6dba.setContent(html_9340414d4601e54b4b95a78fba671ca8);
+            
+        
+
+        poly_line_4651cec2308ecd36f952b7980e8d9183.bindPopup(popup_2f4d2f82c25ea4c5f89511eaef8d6dba)
+        ;
+
+        
+    
+    
+            var marker_9fa0a553ae3bee92fd3e1bd9f8aa6adf = L.marker(
+                [51.05904, 71.38062],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_992c8a40243302b550aadc876dfd2b66 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_784869d60cc80591791b439725a497fd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3e84a9a0247aa6e7133f65f8e9453c1a = $(`<div id="html_3e84a9a0247aa6e7133f65f8e9453c1a" style="width: 100.0%; height: 100.0%;">Начало трека -5932978599029970540</div>`)[0];
+                popup_784869d60cc80591791b439725a497fd.setContent(html_3e84a9a0247aa6e7133f65f8e9453c1a);
+            
+        
+
+        marker_9fa0a553ae3bee92fd3e1bd9f8aa6adf.bindPopup(popup_784869d60cc80591791b439725a497fd)
+        ;
+
+        
+    
+    
+                marker_9fa0a553ae3bee92fd3e1bd9f8aa6adf.setIcon(icon_992c8a40243302b550aadc876dfd2b66);
+            
+    
+            var marker_26c53609b1223af9981ba614873909b2 = L.marker(
+                [51.05887, 71.39029],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_8de1bbe75dd9e5492933f67435449c53 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_396cedde16e868512f037a40ef92eb63 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2e168817a569e4f37cb34ed085cb6354 = $(`<div id="html_2e168817a569e4f37cb34ed085cb6354" style="width: 100.0%; height: 100.0%;">Конец трека -5932978599029970540</div>`)[0];
+                popup_396cedde16e868512f037a40ef92eb63.setContent(html_2e168817a569e4f37cb34ed085cb6354);
+            
+        
+
+        marker_26c53609b1223af9981ba614873909b2.bindPopup(popup_396cedde16e868512f037a40ef92eb63)
+        ;
+
+        
+    
+    
+                marker_26c53609b1223af9981ba614873909b2.setIcon(icon_8de1bbe75dd9e5492933f67435449c53);
+            
+    
+            var poly_line_6a0413c9d935b885eecc83591417c16d = L.polyline(
+                [[51.0718, 71.38368], [51.07801, 71.38361], [51.06735, 71.38288], [51.07594, 71.38687], [51.06168, 71.39404], [51.0624, 71.38503], [51.06737, 71.39168], [51.06776, 71.3939], [51.07147, 71.38949], [51.06896, 71.38971], [51.0646, 71.37793], [51.06927, 71.39018], [51.07462, 71.39175], [51.06551, 71.37731], [51.06623, 71.39491], [51.06869, 71.38519], [51.06587, 71.39239], [51.06505, 71.38439]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_437806a9519f03d14a4b36de35c4cffc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a9bca574f6c4513ffe0651895b8423e4 = $(`<div id="html_a9bca574f6c4513ffe0651895b8423e4" style="width: 100.0%; height: 100.0%;">Трек -5001011919706891504<br>Средняя скорость: 10.9 км/ч</div>`)[0];
+                popup_437806a9519f03d14a4b36de35c4cffc.setContent(html_a9bca574f6c4513ffe0651895b8423e4);
+            
+        
+
+        poly_line_6a0413c9d935b885eecc83591417c16d.bindPopup(popup_437806a9519f03d14a4b36de35c4cffc)
+        ;
+
+        
+    
+    
+            var marker_ea852ca2c14fd942883a594bc40a5792 = L.marker(
+                [51.0718, 71.38368],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_2b28c06dfc14bbced7963eb6133585e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_32dafbbb5f773b55e1b951c87415b074 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_943a35bdeaac16b63c3f32fe1e901dcf = $(`<div id="html_943a35bdeaac16b63c3f32fe1e901dcf" style="width: 100.0%; height: 100.0%;">Начало трека -5001011919706891504</div>`)[0];
+                popup_32dafbbb5f773b55e1b951c87415b074.setContent(html_943a35bdeaac16b63c3f32fe1e901dcf);
+            
+        
+
+        marker_ea852ca2c14fd942883a594bc40a5792.bindPopup(popup_32dafbbb5f773b55e1b951c87415b074)
+        ;
+
+        
+    
+    
+                marker_ea852ca2c14fd942883a594bc40a5792.setIcon(icon_2b28c06dfc14bbced7963eb6133585e4);
+            
+    
+            var marker_b9f1f8b7e22dcb3c8f6126f99d0ffc3c = L.marker(
+                [51.06505, 71.38439],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_5ac38c476c1d4e52103bb75de133ba30 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_47c1574d74b236adbb0d2c23d7415c3b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8d835be9b71dca46fade236e0a788240 = $(`<div id="html_8d835be9b71dca46fade236e0a788240" style="width: 100.0%; height: 100.0%;">Конец трека -5001011919706891504</div>`)[0];
+                popup_47c1574d74b236adbb0d2c23d7415c3b.setContent(html_8d835be9b71dca46fade236e0a788240);
+            
+        
+
+        marker_b9f1f8b7e22dcb3c8f6126f99d0ffc3c.bindPopup(popup_47c1574d74b236adbb0d2c23d7415c3b)
+        ;
+
+        
+    
+    
+                marker_b9f1f8b7e22dcb3c8f6126f99d0ffc3c.setIcon(icon_5ac38c476c1d4e52103bb75de133ba30);
+            
+    
+            var poly_line_ebf9d365886e18e45b71b6fc3e69e08f = L.polyline(
+                [[51.08026, 71.39218], [51.08417, 71.40602], [51.07478, 71.40314], [51.07054, 71.39244], [51.07766, 71.3999], [51.0778, 71.40192], [51.07157, 71.4014], [51.07464, 71.40742], [51.07748, 71.39905], [51.08408, 71.38925], [51.08558, 71.39599]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_2e7703686d361eafa24208cb0708dac6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_511fe46c5fef6817ce741b41b860ee1e = $(`<div id="html_511fe46c5fef6817ce741b41b860ee1e" style="width: 100.0%; height: 100.0%;">Трек -4921288594695808880<br>Средняя скорость: 11.3 км/ч</div>`)[0];
+                popup_2e7703686d361eafa24208cb0708dac6.setContent(html_511fe46c5fef6817ce741b41b860ee1e);
+            
+        
+
+        poly_line_ebf9d365886e18e45b71b6fc3e69e08f.bindPopup(popup_2e7703686d361eafa24208cb0708dac6)
+        ;
+
+        
+    
+    
+            var marker_bfc6b1acadc4cbe435259553816d85cc = L.marker(
+                [51.08026, 71.39218],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_c8cc0c623f1d0b3f5004fd80fbcc4c89 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b986496ae7f74348083d0ddb7b0acb8d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1e7bf9b4a89bdab33a1fcecc9def850f = $(`<div id="html_1e7bf9b4a89bdab33a1fcecc9def850f" style="width: 100.0%; height: 100.0%;">Начало трека -4921288594695808880</div>`)[0];
+                popup_b986496ae7f74348083d0ddb7b0acb8d.setContent(html_1e7bf9b4a89bdab33a1fcecc9def850f);
+            
+        
+
+        marker_bfc6b1acadc4cbe435259553816d85cc.bindPopup(popup_b986496ae7f74348083d0ddb7b0acb8d)
+        ;
+
+        
+    
+    
+                marker_bfc6b1acadc4cbe435259553816d85cc.setIcon(icon_c8cc0c623f1d0b3f5004fd80fbcc4c89);
+            
+    
+            var marker_0390e66b719c99486801ccff3074f581 = L.marker(
+                [51.08558, 71.39599],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_bfc551b5436bce3f76ba77efecd23fd4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4980b3344404aeea8b531ca70fc2acfc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b7c1a8750ed8588c2c9527b3a58a4cec = $(`<div id="html_b7c1a8750ed8588c2c9527b3a58a4cec" style="width: 100.0%; height: 100.0%;">Конец трека -4921288594695808880</div>`)[0];
+                popup_4980b3344404aeea8b531ca70fc2acfc.setContent(html_b7c1a8750ed8588c2c9527b3a58a4cec);
+            
+        
+
+        marker_0390e66b719c99486801ccff3074f581.bindPopup(popup_4980b3344404aeea8b531ca70fc2acfc)
+        ;
+
+        
+    
+    
+                marker_0390e66b719c99486801ccff3074f581.setIcon(icon_bfc551b5436bce3f76ba77efecd23fd4);
+            
+    
+            var poly_line_a36f8d94c6f126975e1a88f9cce958e6 = L.polyline(
+                [[51.07425, 71.41376], [51.06634, 71.40787], [51.06559, 71.41002], [51.06544, 71.41301], [51.07553, 71.40164], [51.07717, 71.40675], [51.06821, 71.41356], [51.06497, 71.40309], [51.06936, 71.41027], [51.06667, 71.41313], [51.06462, 71.40279], [51.06789, 71.40999]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_85936faa41dd11878c4a7a5eb69ada53 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_64a97cdac987659f2888590b6e1eaab6 = $(`<div id="html_64a97cdac987659f2888590b6e1eaab6" style="width: 100.0%; height: 100.0%;">Трек -4507554180796218076<br>Средняя скорость: 8.8 км/ч</div>`)[0];
+                popup_85936faa41dd11878c4a7a5eb69ada53.setContent(html_64a97cdac987659f2888590b6e1eaab6);
+            
+        
+
+        poly_line_a36f8d94c6f126975e1a88f9cce958e6.bindPopup(popup_85936faa41dd11878c4a7a5eb69ada53)
+        ;
+
+        
+    
+    
+            var marker_460886eb6195d11554f86df7f7aadb36 = L.marker(
+                [51.07425, 71.41376],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_0edda8da6d14bc1b3b3e1af0f7e8444b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eec2a4086dfa6781608a553d23b4c55c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_70b0a4e4bb8a56a7f8e904b105904337 = $(`<div id="html_70b0a4e4bb8a56a7f8e904b105904337" style="width: 100.0%; height: 100.0%;">Начало трека -4507554180796218076</div>`)[0];
+                popup_eec2a4086dfa6781608a553d23b4c55c.setContent(html_70b0a4e4bb8a56a7f8e904b105904337);
+            
+        
+
+        marker_460886eb6195d11554f86df7f7aadb36.bindPopup(popup_eec2a4086dfa6781608a553d23b4c55c)
+        ;
+
+        
+    
+    
+                marker_460886eb6195d11554f86df7f7aadb36.setIcon(icon_0edda8da6d14bc1b3b3e1af0f7e8444b);
+            
+    
+            var marker_94e61949f9f49ff9894e694ad35147a0 = L.marker(
+                [51.06789, 71.40999],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_80aa8876cfee4e66511dc0e885394bd1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8e5909463b19fa32764b94a13713b34e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f04bf02094b0a61391a38329ac38fc91 = $(`<div id="html_f04bf02094b0a61391a38329ac38fc91" style="width: 100.0%; height: 100.0%;">Конец трека -4507554180796218076</div>`)[0];
+                popup_8e5909463b19fa32764b94a13713b34e.setContent(html_f04bf02094b0a61391a38329ac38fc91);
+            
+        
+
+        marker_94e61949f9f49ff9894e694ad35147a0.bindPopup(popup_8e5909463b19fa32764b94a13713b34e)
+        ;
+
+        
+    
+    
+                marker_94e61949f9f49ff9894e694ad35147a0.setIcon(icon_80aa8876cfee4e66511dc0e885394bd1);
+            
+    
+            var poly_line_d7949586777afddfa2b2bbbb3cacd210 = L.polyline(
+                [[51.08287, 71.38762], [51.07111, 71.38475], [51.07698, 71.39782], [51.08, 71.38314], [51.08262, 71.3963], [51.08799, 71.38979], [51.08299, 71.39017], [51.08206, 71.38374], [51.07792, 71.38466], [51.08841, 71.38462], [51.09246, 71.38806], [51.08659, 71.38627], [51.08825, 71.38806], [51.06835, 71.39019], [51.07945, 71.38063]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+        var popup_9e446b6b799c24fdb201af26faeac13f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8d5f58530192fe7f715a685aa97e8efb = $(`<div id="html_8d5f58530192fe7f715a685aa97e8efb" style="width: 100.0%; height: 100.0%;">Трек -4244388691541516765<br>Средняя скорость: 8.0 км/ч</div>`)[0];
+                popup_9e446b6b799c24fdb201af26faeac13f.setContent(html_8d5f58530192fe7f715a685aa97e8efb);
+            
+        
+
+        poly_line_d7949586777afddfa2b2bbbb3cacd210.bindPopup(popup_9e446b6b799c24fdb201af26faeac13f)
+        ;
+
+        
+    
+    
+            var marker_ff03138437a500e747e3ddc0dfb7298e = L.marker(
+                [51.08287, 71.38762],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_beec8cd49bb45c64d592227d348ae2bd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ad6cf2c9faaac2e39c6ea9be6d5934de = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1d874a080a00689a4fa44c39194d5832 = $(`<div id="html_1d874a080a00689a4fa44c39194d5832" style="width: 100.0%; height: 100.0%;">Начало трека -4244388691541516765</div>`)[0];
+                popup_ad6cf2c9faaac2e39c6ea9be6d5934de.setContent(html_1d874a080a00689a4fa44c39194d5832);
+            
+        
+
+        marker_ff03138437a500e747e3ddc0dfb7298e.bindPopup(popup_ad6cf2c9faaac2e39c6ea9be6d5934de)
+        ;
+
+        
+    
+    
+                marker_ff03138437a500e747e3ddc0dfb7298e.setIcon(icon_beec8cd49bb45c64d592227d348ae2bd);
+            
+    
+            var marker_a0c4f8e5e5f4219f273f12d059371d7d = L.marker(
+                [51.07945, 71.38063],
+                {
+}
+            ).addTo(map_8f65276bfcfd45a466420d2d92603774);
+        
+    
+            var icon_2a1370ff4f96f8bcd572950f9dab6dc9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "stop",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_58656c347df6f6dfdd71a7116ecf7c10 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c3edf8ba510425e63c6a52ceccadeb5a = $(`<div id="html_c3edf8ba510425e63c6a52ceccadeb5a" style="width: 100.0%; height: 100.0%;">Конец трека -4244388691541516765</div>`)[0];
+                popup_58656c347df6f6dfdd71a7116ecf7c10.setContent(html_c3edf8ba510425e63c6a52ceccadeb5a);
+            
+        
+
+        marker_a0c4f8e5e5f4219f273f12d059371d7d.bindPopup(popup_58656c347df6f6dfdd71a7116ecf7c10)
+        ;
+
+        
+    
+    
+                marker_a0c4f8e5e5f4219f273f12d059371d7d.setIcon(icon_2a1370ff4f96f8bcd572950f9dab6dc9);
+            
+</script>
+</html>
